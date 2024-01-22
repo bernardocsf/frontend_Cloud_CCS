@@ -50,7 +50,7 @@
       }
 
       .table-actions .btn {
-        margin-left: 5px;
+        margin: 10px;
       }
 
       @media (min-width: 768px) {
@@ -128,13 +128,13 @@
                 <table class="table table-bordered table-striped table-actions">
                   <thead class="thead-light">
                     <tr>
-                      <th>Nome do Arquivo</th>
-                      <th>Ações</th>
+                      <th>File Name</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody id="files">
                     <tr class="file">
-                      <td>arquivo1.txt</td>
+                      <!-- <td>arquivo1.txt</td>
                       <td>
                         <button class="download btn btn-primary btn-sm">
                           Download
@@ -144,8 +144,8 @@
                           onclick="apagarArquivo(this)"
                         >
                           Apagar
-                        </button>
-                      </td>
+                        </button> -->
+                      <!-- </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -182,17 +182,18 @@
         });
         if (response.ok) {
           const data = await response.json();
-
+          
           return data.files;
         } else {
           console.log(response.status);
         }
       }
 
-      let files = fetchFiles();
+      let files = await fetchFiles();
       console.log(files);
 
       const tableBody = document.getElementById("files");
+
 
       files.forEach((file) => {
         const row = document.createElement("tr");
@@ -201,16 +202,25 @@
         nameCell.textContent = file.name;
         row.appendChild(nameCell);
 
-        const ageCell = document.createElement("button");
-        ageCell.textContent = "Download";
-        row.appendChild(ageCell);
+        const downloadBtn = document.createElement("button");
+        downloadBtn.textContent = "Download";
+        row.appendChild(downloadBtn);
+        downloadBtn.classList.add('btn', 'btn-primary', 'btn-sm');
 
-        const cityCell = document.createElement("td");
-        cityCell.textContent = "Apagar";
-        row.appendChild(cityCell);
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        row.appendChild(deleteBtn);
+        deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
 
+        downloadBtn.addEventListener('click', function() {
+          console.log('file.file:', file.file);
+          window.location.href = file.file;
+        });
+        
         tableBody.appendChild(row);
       });
+
+      
     </script>
 
     <script>
@@ -218,6 +228,7 @@
         // Adicione aqui a lógica para apagar o arquivo
         alert("Arquivo apagado!");
       }
+
     </script>
 
     <div id="dropDownSelect1"></div>
