@@ -1,141 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/css-hamburgers/hamburgers.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/animsition/css/animsition.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/select2/select2.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/daterangepicker/daterangepicker.css"
+    />
+    <link rel="stylesheet" type="text/css" href="css/util.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
 
-    <head>
-        <title>Home</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-        <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-        <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-        <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-        <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-        <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-        <link rel="stylesheet" type="text/css" href="css/util.css">
-        <link rel="stylesheet" type="text/css" href="css/main.css">
+    <style>
+      .table-actions th,
+      .table-actions td {
+        text-align: center;
+      }
 
-        <style>
-            .table-actions th,
-            .table-actions td {
-                text-align: center;
-            }
+      .table-actions .btn {
+        margin-left: 5px;
+      }
 
-            .table-actions .btn {
-                margin-left: 5px;
-            }
+      @media (min-width: 768px) {
+        .table-actions .btn {
+          margin-left: 5;
+          float: right;
+        }
+      }
 
-            @media (min-width: 768px) {
-                .table-actions .btn {
-                    margin-left: 5;
-                    float: right;
-                }
-            }
+      /* Estilizando o botão de upload */
+      .upload-btn {
+        background-color: #4caf50;
+        /* Cor de fundo verde */
+        color: white;
+        /* Cor do texto branco */
+        border: none;
+        /* Sem borda */
+        padding: 8px 16px;
+        /* Espaçamento interno */
+        text-align: center;
+        /* Centralizar texto */
+        text-decoration: none;
+        /* Sem decoração de texto */
+        display: inline-block;
+        /* Como um elemento em linha */
+        font-size: 14px;
+        /* Tamanho da fonte */
+        margin: 4px 2px;
+        /* Margem externa */
+        cursor: pointer;
+        /* Cursor ao passar por cima */
+        border-radius: 4px;
+        /* Borda arredondada */
+      }
 
-            /* Estilizando o botão de upload */
-            .upload-btn {
-                background-color: #4CAF50;
-                /* Cor de fundo verde */
-                color: white;
-                /* Cor do texto branco */
-                border: none;
-                /* Sem borda */
-                padding: 8px 16px;
-                /* Espaçamento interno */
-                text-align: center;
-                /* Centralizar texto */
-                text-decoration: none;
-                /* Sem decoração de texto */
-                display: inline-block;
-                /* Como um elemento em linha */
-                font-size: 14px;
-                /* Tamanho da fonte */
-                margin: 4px 2px;
-                /* Margem externa */
-                cursor: pointer;
-                /* Cursor ao passar por cima */
-                border-radius: 4px;
-                /* Borda arredondada */
-            }
+      .upload-btn:hover {
+        background-color: #45a049;
+        /* Cor de fundo verde mais escura ao passar por cima */
+      }
+    </style>
+  </head>
 
-            .upload-btn:hover {
-                background-color: #45a049;
-                /* Cor de fundo verde mais escura ao passar por cima */
-            }
-        </style>
-    </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">MyCloud</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">MyCloud</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
-                    </li>
-                </ul>
+    <div class="limiter">
+      <div
+        class="container-login100"
+        style="background-image: url('images/bg-01.jpg')"
+      >
+        <div class="container my-5">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="table-responsive bg-white p-4">
+                <table class="table table-bordered table-striped table-actions">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>Nome do Arquivo</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="files">
+                    <tr class="file">
+                      <td>arquivo1.txt</td>
+                      <td>
+                        <button class="download btn btn-primary btn-sm">
+                          Download
+                        </button>
+                        <button
+                          class="delete btn btn-danger btn-sm"
+                          onclick="apagarArquivo(this)"
+                        >
+                          Apagar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="container-login100-form-btn m-t-32">
+                <label for="fileInput" class="btn btn-outline-success btn-sm"
+                  >Upload</label
+                >
+                <input
+                  type="file"
+                  id="fileInput"
+                  class="form-control-file"
+                  style="display: none"
+                />
+              </div>
             </div>
-        </nav>
-
-        <div class="limiter">
-            <div class="container-login100" style="background-image: url('images/bg-01.jpg');">
-
-                <div class="container my-5">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="table-responsive bg-white p-4">
-                                <table class="table table-bordered table-striped table-actions">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th>Nome do Arquivo</th>
-                                            <th>Ações</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>arquivo1.txt</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Download</button>
-                                                <button class="btn btn-danger btn-sm"
-                                                    onclick="apagarArquivo(this)">Apagar</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="container-login100-form-btn m-t-32">
-                                <label for="fileInput" class="btn btn-outline-success btn-sm">Upload</label>
-                                <input type="file" id="fileInput" class="form-control-file" style="display: none;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <script>
-            function apagarArquivo(button) {
-                // Adicione aqui a lógica para apagar o arquivo
-                alert("Arquivo apagado!");
-            }
-        </script>
+    <script type="module">
+      import API_URL from "../js/config.js";
 
-        <div id="dropDownSelect1"></div>
-        <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-        <script src="vendor/animsition/js/animsition.min.js"></script>
-        <script src="vendor/bootstrap/js/popper.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-        <script src="vendor/select2/select2.min.js"></script>
-        <script src="vendor/daterangepicker/moment.min.js"></script>
-        <script src="vendor/daterangepicker/daterangepicker.js"></script>
-        <script src="vendor/countdowntime/countdowntime.js"></script>
-        <script src="js/main.js"></script>
-    </body>
+      async function fetchFiles() {
+        const accessToken = JSON.parse(sessionStorage.getItem("loggedUser"));
+        const response = await fetch(`${API_URL}/files`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "x-access-token": `Bearer ${accessToken}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
 
+          return data.files;
+        } else {
+          console.log(response.status);
+        }
+      }
+
+      let files = fetchFiles();
+      console.log(files);
+
+      const tableBody = document.getElementById("files");
+
+      files.forEach((file) => {
+        const row = document.createElement("tr");
+
+        const nameCell = document.createElement("td");
+        nameCell.textContent = file.name;
+        row.appendChild(nameCell);
+
+        const ageCell = document.createElement("button");
+        ageCell.textContent = "Download";
+        row.appendChild(ageCell);
+
+        const cityCell = document.createElement("td");
+        cityCell.textContent = "Apagar";
+        row.appendChild(cityCell);
+
+        tableBody.appendChild(row);
+      });
+    </script>
+
+    <script>
+      function apagarArquivo(button) {
+        // Adicione aqui a lógica para apagar o arquivo
+        alert("Arquivo apagado!");
+      }
+    </script>
+
+    <div id="dropDownSelect1"></div>
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
