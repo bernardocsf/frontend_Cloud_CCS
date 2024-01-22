@@ -128,8 +128,8 @@
                 <table class="table table-bordered table-striped table-actions">
                   <thead class="thead-light">
                     <tr>
-                      <th>File Name</th>
-                      <th>Actions</th>
+                      <th width="50%">File Name</th>
+                      <th width="50%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="files">
@@ -189,6 +189,22 @@
         }
       }
 
+      async function deleteFile(id) {
+        const accessToken = JSON.parse(sessionStorage.getItem("loggedUser"));
+        const response = await fetch(`${API_URL}/files/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "x-access-token": `Bearer ${accessToken}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+        } else {
+          console.log(response.status);
+        }
+      }
+
       let files = await fetchFiles();
       console.log(files);
 
@@ -216,6 +232,12 @@
           console.log('file.file:', file.file);
           window.location.href = file.file;
         });
+
+        deleteBtn.addEventListener('click', function() {
+          deleteFile(file._id)
+          files
+          window.location.reload()
+        })
         
         tableBody.appendChild(row);
       });
