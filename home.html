@@ -128,25 +128,44 @@
                 <table class="table table-bordered table-striped table-actions">
                   <thead class="thead-light">
                     <tr>
-                      <th width="50%">File Name</th>
+                      <th width="50%">My Files</th>
                       <th width="50%">Actions</th>
                     </tr>
                   </thead>
-                  <tbody id="files">
-                    <tr class="file"></tr>
-                  </tbody>
+                  <tbody id="files"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container my-5">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="table-responsive bg-white p-4">
+                <table
+                  id="upTable"
+                  class="table table-bordered table-striped table-actions"
+                >
+                  <thead class="thead-light">
+                    <tr>
+                      <th width="70%">Upload Files</th>
+                      <th width="30%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="upload"></tbody>
                 </table>
               </div>
 
               <div class="container-login100-form-btn m-t-32">
                 <label for="fileInput" class="btn btn-outline-success btn-sm"
-                  >Upload</label
+                  >Select Files</label
                 >
                 <input
                   type="file"
                   id="fileInput"
                   class="form-control-file"
                   style="display: none"
+                  multiple
                 />
               </div>
             </div>
@@ -194,8 +213,97 @@
         }
       }
 
+      async function uploadFile(file) {
+        const accessToken = JSON.parse(sessionStorage.getItem("loggedUser"));
+        const response = await fetch(`${API_URL}/files`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "x-access-token": `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            file: file,
+          }),
+        });
+        console.log(JSON.stringify({ file }));
+        if (response.ok) {
+          const data = await response.json();
+        } else {
+          console.log(response.status);
+        }
+      }
+
+      async function uploadManyFiles(files) {
+        const accessToken = JSON.parse(sessionStorage.getItem("loggedUser"));
+        const response = await fetch(`${API_URL}/files/addMany`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            "x-access-token": `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          files = await fetchFiles();
+          window.location.reload();
+        } else {
+          console.log(response.status);
+        }
+      }
+
       let files = await fetchFiles();
-      console.log(files);
+
+      let fileInput = document.getElementById("fileInput");
+
+      const tBody = document.getElementById("upload");
+      fileInput.addEventListener("change", function () {
+        let selectedFiles = fileInput.files;
+
+        tBody.innerHTML = "";
+
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const row = document.createElement("tr");
+
+          const nameCell = document.createElement("td");
+          nameCell.textContent = selectedFiles[i].name;
+
+          row.appendChild(nameCell);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Delete";
+          row.appendChild(deleteBtn);
+
+          deleteBtn.classList.add("btn", "btn-danger", "btn-sm", "deleteBtnUp");
+
+          tBody.appendChild(row);
+        }
+
+        let element = document.getElementById("uploadBtn");
+        let tb = document.getElementById("upTable");
+        if (!element) {
+          let uploadBtn = document.createElement("button");
+          uploadBtn.textContent = "Upload";
+          uploadBtn.classList.add("btn", "btn-primary", "btn-sm");
+          uploadBtn.setAttribute("id", "uploadBtn");
+          uploadBtn.setAttribute("colSpan", 2);
+          tb.appendChild(uploadBtn);
+
+          let upBtn = document.getElementById("uploadBtn");
+          upBtn.addEventListener("click", function (e) {
+            if (fileInput.files.length == 1) {
+              console.log(fileInput.files[0]);
+              uploadFile(fileInput.files[0]);
+            } else {
+              uploadManyFiles(fileInput.files);
+            }
+          });
+        }
+      });
+
       const tableBody = document.getElementById("files");
 
       files.forEach((file) => {
@@ -210,11 +318,13 @@
         const downloadBtn = document.createElement("button");
         downloadBtn.textContent = "Download";
         row.appendChild(downloadBtn);
+
         downloadBtn.classList.add("btn", "btn-primary", "btn-sm");
 
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete";
         row.appendChild(deleteBtn);
+
         deleteBtn.classList.add("btn", "btn-danger", "btn-sm", "deleteBtn");
 
         downloadBtn.addEventListener("click", function () {
@@ -226,26 +336,14 @@
       });
 
       let deleteBtns = document.querySelectorAll(".deleteBtn");
-      console.log(deleteBtns);
       deleteBtns.forEach((btn, index) => {
         btn.addEventListener("click", function (e) {
           let trElement = btn.closest("tr");
           let tdElementWithId = trElement.querySelector("td");
           let fileId = tdElementWithId.id;
-          console.log(fileId);
-
           deleteFile(fileId);
-          // files;
-          // window.location.reload();
         });
       });
-    </script>
-
-    <script>
-      function apagarArquivo(button) {
-        // Adicione aqui a lógica para apagar o arquivo
-        alert("Arquivo apagado!");
-      }
     </script>
 
     <div id="dropDownSelect1"></div>
