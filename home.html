@@ -141,7 +141,7 @@
         <div class="container my-5">
           <div class="row justify-content-center">
             <div class="col-md-8">
-              <div class="table-responsive bg-white p-4">
+              <div id="div" class="table-responsive bg-white p-4">
                 <table
                   id="upTable"
                   class="table table-bordered table-striped table-actions"
@@ -215,36 +215,38 @@
 
       async function uploadFile(file) {
         const accessToken = JSON.parse(sessionStorage.getItem("loggedUser"));
+        const formData = new FormData();
+        formData.append("file", file);
         const response = await fetch(`${API_URL}/files`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json;charset=utf-8",
             "x-access-token": `Bearer ${accessToken}`,
           },
-          body: JSON.stringify({
-            file: file,
-          }),
+          body: formData,
         });
-        console.log(JSON.stringify({ file }));
         if (response.ok) {
           const data = await response.json();
+          window.location.reload();
         } else {
           console.log(response.status);
         }
       }
 
-      async function uploadManyFiles(files) {
+      async function uploadManyFiles(files, name) {
         const accessToken = JSON.parse(sessionStorage.getItem("loggedUser"));
+        const formData = new FormData();
+
+        for (let i = 0; i < files.length; i++) {
+          formData.append("files", files[i]);
+        }
+
+        formData.append("name", name);
         const response = await fetch(`${API_URL}/files/addMany`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json;charset=utf-8",
             "x-access-token": `Bearer ${accessToken}`,
           },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
+          body: formData,
         });
         if (response.ok) {
           const data = await response.json();
@@ -258,18 +260,27 @@
       let files = await fetchFiles();
 
       let fileInput = document.getElementById("fileInput");
+      const selectedFilesArray = [];
 
       const tBody = document.getElementById("upload");
       fileInput.addEventListener("change", function () {
         let selectedFiles = fileInput.files;
 
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
+          console.log("Selected File:", file.name);
+          selectedFilesArray.push(file);
+        }
+
+        console.log(selectedFilesArray);
+
         tBody.innerHTML = "";
 
-        for (let i = 0; i < selectedFiles.length; i++) {
+        for (let i = 0; i < selectedFilesArray.length; i++) {
           const row = document.createElement("tr");
 
           const nameCell = document.createElement("td");
-          nameCell.textContent = selectedFiles[i].name;
+          nameCell.textContent = selectedFilesArray[i].name;
 
           row.appendChild(nameCell);
 
@@ -283,7 +294,7 @@
         }
 
         let element = document.getElementById("uploadBtn");
-        let tb = document.getElementById("upTable");
+        let tb = document.getElementById("div");
         if (!element) {
           let uploadBtn = document.createElement("button");
           uploadBtn.textContent = "Upload";
@@ -292,16 +303,54 @@
           uploadBtn.setAttribute("colSpan", 2);
           tb.appendChild(uploadBtn);
 
+          console.log(selectedFilesArray.length);
+
+          if (selectedFilesArray.length > 1) {
+            let input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "Name of folder";
+            input.setAttribute("id", "folderName");
+            tb.appendChild(input);
+          }
+
           let upBtn = document.getElementById("uploadBtn");
           upBtn.addEventListener("click", function (e) {
-            if (fileInput.files.length == 1) {
-              console.log(fileInput.files[0]);
-              uploadFile(fileInput.files[0]);
-            } else {
-              uploadManyFiles(fileInput.files);
+            if (selectedFilesArray.length == 1) {
+              uploadFile(selectedFilesArray[0]);
             }
           });
         }
+
+        let deleteBtnUp = document.querySelectorAll(".deleteBtnUp");
+        console.log(deleteBtnUp);
+        deleteBtnUp.forEach((btn, index) => {
+          btn.addEventListener("click", function (e) {
+            let trElement = btn.closest("tr");
+            selectedFilesArray.forEach((file) => {
+              if (file.name == trElement.querySelector("td").innerHTML) {
+                let indexToRemove = selectedFilesArray.indexOf(file);
+                if (indexToRemove !== -1) {
+                  selectedFilesArray.splice(indexToRemove, 1);
+                }
+
+                trElement.remove();
+                if (selectedFilesArray.length == 1) {
+                  let input = document.getElementById("folderName");
+                  if (input) {
+                    input.remove();
+                  }
+                }
+
+                if (selectedFilesArray.length == 0) {
+                  let btn = document.getElementById("uploadBtn");
+                  if (btn) {
+                    btn.remove();
+                  }
+                }
+              }
+            });
+          });
+        });
       });
 
       const tableBody = document.getElementById("files");
