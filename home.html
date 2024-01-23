@@ -133,20 +133,7 @@
                     </tr>
                   </thead>
                   <tbody id="files">
-                    <tr class="file">
-                      <!-- <td>arquivo1.txt</td>
-                      <td>
-                        <button class="download btn btn-primary btn-sm">
-                          Download
-                        </button>
-                        <button
-                          class="delete btn btn-danger btn-sm"
-                          onclick="apagarArquivo(this)"
-                        >
-                          Apagar
-                        </button> -->
-                      <!-- </td> -->
-                    </tr>
+                    <tr class="file"></tr>
                   </tbody>
                 </table>
               </div>
@@ -182,7 +169,7 @@
         });
         if (response.ok) {
           const data = await response.json();
-          
+
           return data.files;
         } else {
           console.log(response.status);
@@ -200,6 +187,8 @@
         });
         if (response.ok) {
           const data = await response.json();
+          files = await fetchFiles();
+          window.location.reload();
         } else {
           console.log(response.status);
         }
@@ -207,42 +196,49 @@
 
       let files = await fetchFiles();
       console.log(files);
-
       const tableBody = document.getElementById("files");
-
 
       files.forEach((file) => {
         const row = document.createElement("tr");
 
         const nameCell = document.createElement("td");
         nameCell.textContent = file.name;
+        nameCell.setAttribute("id", file._id);
+
         row.appendChild(nameCell);
 
         const downloadBtn = document.createElement("button");
         downloadBtn.textContent = "Download";
         row.appendChild(downloadBtn);
-        downloadBtn.classList.add('btn', 'btn-primary', 'btn-sm');
+        downloadBtn.classList.add("btn", "btn-primary", "btn-sm");
 
         const deleteBtn = document.createElement("button");
         deleteBtn.textContent = "Delete";
         row.appendChild(deleteBtn);
-        deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+        deleteBtn.classList.add("btn", "btn-danger", "btn-sm", "deleteBtn");
 
-        downloadBtn.addEventListener('click', function() {
-          console.log('file.file:', file.file);
+        downloadBtn.addEventListener("click", function () {
+          console.log("file.file:", file.file);
           window.location.href = file.file;
         });
 
-        deleteBtn.addEventListener('click', function() {
-          deleteFile(file._id)
-          files
-          window.location.reload()
-        })
-        
         tableBody.appendChild(row);
       });
 
-      
+      let deleteBtns = document.querySelectorAll(".deleteBtn");
+      console.log(deleteBtns);
+      deleteBtns.forEach((btn, index) => {
+        btn.addEventListener("click", function (e) {
+          let trElement = btn.closest("tr");
+          let tdElementWithId = trElement.querySelector("td");
+          let fileId = tdElementWithId.id;
+          console.log(fileId);
+
+          deleteFile(fileId);
+          // files;
+          // window.location.reload();
+        });
+      });
     </script>
 
     <script>
@@ -250,7 +246,6 @@
         // Adicione aqui a lógica para apagar o arquivo
         alert("Arquivo apagado!");
       }
-
     </script>
 
     <div id="dropDownSelect1"></div>
