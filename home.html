@@ -355,6 +355,11 @@
           upBtn.addEventListener("click", function (e) {
             if (selectedFilesArray.length == 1) {
               uploadFile(selectedFilesArray[0]);
+            } else {
+              uploadManyFiles(
+                selectedFilesArray,
+                document.getElementById("folderName").value
+              );
             }
           });
         }
