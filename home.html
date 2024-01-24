@@ -380,6 +380,17 @@
               }
             }
           });
+        } else {
+          if (selectedFilesArray.length > 1) {
+            let input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "Name of folder";
+            input.setAttribute("id", "folderName");
+            input.setAttribute("required", "");
+            input.style.border = "2px solid #9A89A9";
+            input.style.marginRight = "20px";
+            tb.insertBefore(input, element);
+          }
         }
 
         let deleteBtnUp = document.querySelectorAll(".deleteBtnUp");
