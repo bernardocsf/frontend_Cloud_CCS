@@ -48,7 +48,9 @@
     <div class="limiter">
       <div
         class="container-login100"
-        style="background-image: url('https://images.unsplash.com/photo-1664262283660-8d25f6afdb73?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1664262283660-8d25f6afdb73?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        "
       >
         <div class="wrap-login100 p-t-30 p-b-50">
           <span class="login100-form-title p-b-41"> Account Login </span>
@@ -62,7 +64,7 @@
             >
               <input
                 class="input100"
-                type="text"
+                type="email"
                 name="username"
                 placeholder="Email"
                 id="email"
@@ -84,7 +86,11 @@
               <span class="focus-input100" data-placeholder="&#xe80f;"></span>
             </div>
 
-            <p class="container-login100-form-btn m-t-32" id="errormsg" style="color:red"></p>
+            <p
+              class="container-login100-form-btn m-t-32"
+              id="errormsg"
+              style="color: red"
+            ></p>
 
             <div class="container-login100-form-btn m-t-32">
               <button class="login100-form-btn" id="loginBtn">Login</button>
@@ -127,7 +133,7 @@
           return data.user;
         } else {
           const data = await response.json();
-            document.getElementById("errormsg").innerHTML = data.msg
+          document.getElementById("errormsg").innerHTML = data.msg;
           return response;
         }
       }
