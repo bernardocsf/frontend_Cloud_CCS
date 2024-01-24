@@ -72,12 +72,12 @@
 
             <div
               class="wrap-input100 validate-input"
-              data-validate="Enter username"
+              data-validate="Enter email"
             >
               <input
                 class="input100"
                 type="text"
-                name="username"
+                name="email"
                 placeholder="E-mail"
                 id="email"
               />
@@ -151,7 +151,7 @@
         });
         if (response.ok) {
           login(email,password)
-          location.href = "home.html";
+          // location.href = "home.html";
           return data;
         } else {
           const data = await response.json();
