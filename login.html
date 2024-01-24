@@ -84,6 +84,8 @@
               <span class="focus-input100" data-placeholder="&#xe80f;"></span>
             </div>
 
+            <p class="container-login100-form-btn m-t-32" id="errormsg" style="color:red"></p>
+
             <div class="container-login100-form-btn m-t-32">
               <button class="login100-form-btn" id="loginBtn">Login</button>
             </div>
@@ -124,7 +126,8 @@
           location.href = "home.html";
           return data.user;
         } else {
-          console.log(response.status);
+          const data = await response.json();
+            document.getElementById("errormsg").innerHTML = data.msg
           return response;
         }
       }

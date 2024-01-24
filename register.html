@@ -48,7 +48,7 @@
     <div class="limiter">
       <div
         class="container-login100"
-        style="background-image: url('images/bg-01.jpg')"
+        style="background-image: url('https://images.unsplash.com/photo-1664262283660-8d25f6afdb73?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"
       >
         <div class="wrap-login100 p-t-30 p-b-50">
           <span class="login100-form-title p-b-41"> Account Register </span>
@@ -155,8 +155,8 @@
           location.href = "home.html";
           return data;
         } else {
-          console.log(response);
-            document.getElementById("errormsg").innerHTML = status.msg
+          const data = await response.json();
+            document.getElementById("errormsg").innerHTML = data.msg
           return response;
         }
       }
