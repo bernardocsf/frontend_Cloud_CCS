@@ -110,16 +110,20 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" id="logoutBtn">Logout</a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <div class="limiter">
+    <div class="limiter" style="display: flex;
+    flex-direction: row;">
       <div
         class="container-login100"
-        style="background-image: url('images/bg-01.jpg')"
+        style="
+        display: flex;
+        flex-direction: row;
+        background-image: url('https://images.unsplash.com/photo-1618005198926-1d21ec75e8be?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')"
       >
         <div class="container my-5">
           <div class="row justify-content-center">
@@ -257,6 +261,39 @@
         }
       }
 
+      async function DownloadFile(fileID) {
+        const accessToken = JSON.parse(sessionStorage.getItem("loggedUser"));
+        const response = await fetch(`${API_URL}/files/${fileID}/download`, {
+          method: "GET",
+          headers: {
+            "x-access-token": `Bearer ${accessToken}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          window.location.href = data.download_link
+        } else {
+          console.log(response.status);
+        }
+      }
+
+      async function LogOut() {
+        const accessToken = JSON.parse(sessionStorage.getItem("loggedUser"));
+        const response = await fetch(`${API_URL}/users/logout`, {
+          method: "GET",
+          headers: {
+            "x-access-token": `Bearer ${accessToken}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          sessionStorage.removeItem("loggedUser");
+          window.location.replace("./login.html")
+        } else {
+          console.log(response.status);
+        }
+      }
+
       let files = await fetchFiles();
 
       let fileInput = document.getElementById("fileInput");
@@ -310,6 +347,7 @@
             input.type = "text";
             input.placeholder = "Name of folder";
             input.setAttribute("id", "folderName");
+            input.setAttribute("required", "")
             tb.appendChild(input);
           }
 
@@ -322,7 +360,6 @@
         }
 
         let deleteBtnUp = document.querySelectorAll(".deleteBtnUp");
-        console.log(deleteBtnUp);
         deleteBtnUp.forEach((btn, index) => {
           btn.addEventListener("click", function (e) {
             let trElement = btn.closest("tr");
@@ -377,8 +414,7 @@
         deleteBtn.classList.add("btn", "btn-danger", "btn-sm", "deleteBtn");
 
         downloadBtn.addEventListener("click", function () {
-          console.log("file.file:", file.file);
-          window.location.href = file.file;
+          DownloadFile(file._id);
         });
 
         tableBody.appendChild(row);
@@ -393,6 +429,11 @@
           deleteFile(fileId);
         });
       });
+
+      let logoutBtn = document.getElementById("logoutBtn");
+      logoutBtn.addEventListener("click", function (e) {
+          LogOut();
+        });
     </script>
 
     <div id="dropDownSelect1"></div>
