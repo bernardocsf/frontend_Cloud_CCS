@@ -156,8 +156,7 @@
           }),
         });
         if (response.ok) {
-          login(email,password)
-          location.href = "home.html";
+          login(email, password);
           return data;
         } else {
           const data = await response.json();

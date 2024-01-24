@@ -367,10 +367,7 @@
             if (selectedFilesArray.length == 1) {
               uploadFile(selectedFilesArray[0]);
             } else {
-              if (
-                document.getElementById("folderName").value &&
-                !document.getElementById("folderName").value.trim() === ""
-              ) {
+              if (document.getElementById("folderName").value) {
                 uploadManyFiles(
                   selectedFilesArray,
                   document.getElementById("folderName").value
