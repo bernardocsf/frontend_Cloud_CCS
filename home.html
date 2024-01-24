@@ -355,24 +355,27 @@
             tb.appendChild(uploadBtn);
           }
 
+          let newParagraph = document.createElement("span");
+          newParagraph.textContent = "Please provide a name for the folder!";
+          newParagraph.setAttribute("id", "span");
+          newParagraph.style.color = "red";
+          newParagraph.style.fontSize = "16px";
+          newParagraph.style.marginLeft = "20px";
+
           let upBtn = document.getElementById("uploadBtn");
           upBtn.addEventListener("click", function (e) {
             if (selectedFilesArray.length == 1) {
               uploadFile(selectedFilesArray[0]);
             } else {
-              if (document.getElementById("folderName").value) {
+              if (
+                document.getElementById("folderName").value &&
+                !document.getElementById("folderName").value.trim() === ""
+              ) {
                 uploadManyFiles(
                   selectedFilesArray,
                   document.getElementById("folderName").value
                 );
               } else {
-                let newParagraph = document.createElement("span");
-                newParagraph.textContent =
-                  "Please provide a name for the folder!";
-                newParagraph.setAttribute("id", "span");
-                newParagraph.style.color = "red";
-                newParagraph.style.fontSize = "16px";
-                newParagraph.style.marginLeft = "20px";
                 tb.appendChild(newParagraph);
               }
             }
